@@ -1,15 +1,14 @@
+using CommonServiceLocator;
 using CustomerCrud.Services;
 using CustomerCrud.Views;
 
 using GalaSoft.MvvmLight.Ioc;
 
-using Microsoft.Practices.ServiceLocation;
-
 namespace CustomerCrud.ViewModels
 {
     public class ViewModelLocator
     {
-        NavigationServiceEx _navigationService = new NavigationServiceEx();
+        readonly NavigationServiceEx _navigationService = new NavigationServiceEx();
 
         public ViewModelLocator()
         {

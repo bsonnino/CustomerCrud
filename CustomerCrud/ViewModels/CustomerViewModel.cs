@@ -12,29 +12,23 @@ using GalaSoft.MvvmLight.Command;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using CustomerCrud.Helpers;
+using GalaSoft.MvvmLight.Ioc;
 
 namespace CustomerCrud.ViewModels
 {
     public class CustomerViewModel : ViewModelBase
     {
-        public NavigationServiceEx NavigationService
-        {
-            get
-            {
-                return Microsoft.Practices.ServiceLocation.ServiceLocator.Current.GetInstance<NavigationServiceEx>();
-            }
-        }
+        public NavigationServiceEx NavigationService => SimpleIoc.Default.GetInstance<NavigationServiceEx>();
 
         const string NarrowStateName = "NarrowState";
-        const string WideStateName = "WideState";
 
         private VisualState _currentState;
 
         private Customer _selected;
         
 
-        public ICommand ItemClickCommand { get; private set; }
-        public ICommand StateChangedCommand { get; private set; }
+        public ICommand ItemClickCommand { get; }
+        public ICommand StateChangedCommand { get; }
         public ICommand AddCustomerCommand { get; }
         public ICommand DeleteCustomerCommand { get; }
         public ICommand SaveCustomersCommand { get; }
@@ -47,8 +41,6 @@ namespace CustomerCrud.ViewModels
             DeleteCustomerCommand = new RelayCommand(DoDeleteCustomer);
             SaveCustomersCommand = new RelayCommand(DoSaveCustomers);
         }
-
-        
 
         private void DoDeleteCustomer()
         {
@@ -66,7 +58,7 @@ namespace CustomerCrud.ViewModels
 
         public Customer Selected
         {
-            get { return _selected; }
+            get => _selected;
             set
             {
                 Set(ref _selected, value);
@@ -125,7 +117,7 @@ namespace CustomerCrud.ViewModels
                 Customers.FirstOrDefault();
         }
 
-        public ObservableCollection<Customer> Customers { get; private set; } = new ObservableCollection<Customer>();
+        public ObservableCollection<Customer> Customers { get; } = new ObservableCollection<Customer>();
 
         private void OnStateChanged(VisualStateChangedEventArgs args)
         {
@@ -134,8 +126,7 @@ namespace CustomerCrud.ViewModels
 
         private void OnItemClick(ItemClickEventArgs args)
         {
-            Customer item = args?.ClickedItem as Customer;
-            if (item != null)
+            if (args?.ClickedItem is Customer item)
             {
                 if (_currentState.Name == NarrowStateName)
                 {

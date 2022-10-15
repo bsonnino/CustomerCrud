@@ -11,6 +11,7 @@ using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using GalaSoft.MvvmLight.Ioc;
 
 namespace CustomerCrud.Services
 {
@@ -21,14 +22,7 @@ namespace CustomerCrud.Services
         private readonly UIElement _shell;
         private readonly Type _defaultNavItem;
     
-        private NavigationServiceEx NavigationService
-        {
-            get
-            {
-                return Microsoft.Practices.ServiceLocation.ServiceLocator.Current.GetInstance<NavigationServiceEx>();
-            }
-        }
-        
+        private NavigationServiceEx NavigationService => SimpleIoc.Default.GetInstance<NavigationServiceEx>();
 
         public ActivationService(App app, Type defaultNavItem, UIElement shell = null)
         {

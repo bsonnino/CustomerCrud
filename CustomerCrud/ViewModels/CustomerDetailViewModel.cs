@@ -1,4 +1,3 @@
-using System;
 using System.Windows.Input;
 
 using CustomerCrud.Models;
@@ -8,19 +7,13 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 
 using Windows.UI.Xaml;
+using GalaSoft.MvvmLight.Ioc;
 
 namespace CustomerCrud.ViewModels
 {
     public class CustomerDetailViewModel : ViewModelBase
     {
-
-        public NavigationServiceEx NavigationService
-        {
-            get
-            {
-                return Microsoft.Practices.ServiceLocation.ServiceLocator.Current.GetInstance<NavigationServiceEx>();
-            }
-        }
+        public NavigationServiceEx NavigationService => SimpleIoc.Default.GetInstance<NavigationServiceEx>();
         const string NarrowStateName = "NarrowState";
         const string WideStateName = "WideState";
 
@@ -29,8 +22,8 @@ namespace CustomerCrud.ViewModels
         private Customer _item;
         public Customer Item
         {
-            get { return _item; }
-            set { Set(ref _item, value); }
+            get => _item;
+            set => Set(ref _item, value);
         }
 
         public CustomerDetailViewModel()

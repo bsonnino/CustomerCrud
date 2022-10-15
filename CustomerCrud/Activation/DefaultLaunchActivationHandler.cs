@@ -1,10 +1,9 @@
 using System;
 using System.Threading.Tasks;
-
-using CustomerCrud.Helpers;
 using CustomerCrud.Services;
 
 using Windows.ApplicationModel.Activation;
+using GalaSoft.MvvmLight.Ioc;
 
 namespace CustomerCrud.Activation
 {
@@ -12,14 +11,8 @@ namespace CustomerCrud.Activation
     {
         private readonly string _navElement;
     
-        private NavigationServiceEx NavigationService
-        {
-            get
-            {
-                return Microsoft.Practices.ServiceLocation.ServiceLocator.Current.GetInstance<NavigationServiceEx>();
-            }
-        }
-    
+        private NavigationServiceEx NavigationService => SimpleIoc.Default.GetInstance<NavigationServiceEx>();
+
         public DefaultLaunchActivationHandler(Type navElement)
         {
             _navElement = navElement.FullName;
